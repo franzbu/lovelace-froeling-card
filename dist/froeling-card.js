@@ -212,9 +212,10 @@ class FroelingKesselCard extends BaseFroelingCard {
                     entity: 'sensor.froeling_kesselzustand',
                     label: 'Kesselzustand',
                     stateClasses: {
-                        'Vorheizen': 'stHeatingOn',
-                        'Heizen': 'stHeatingOn',
-                        'SH Heizen': 'stHeatingOn',
+                        'Heating up': 'st4',
+                        'SH Heating': 'st5',
+                        'Fire maintenance': 'st6',
+                        'Fire off': 'st9',
                         'default': 'stHeatingOff'
                     }
                 },
@@ -370,6 +371,18 @@ class FroelingHeizkreisCard extends BaseFroelingCard {
                     display: 'on'
                 },
                 {
+                    id: 'obj_heating',
+                    entity: 'select.froeling_hk2_operating_mode',
+                    label: 'HK2 Betriebsmodus',
+                    stateClasses: {
+                        'aus': 'st1',
+                        'automatik': 'stPumpActive',
+                        'extraheizen': 'stHeatingOn',
+                        'partybetrieb': 'st9',
+                        'default': 'stHeatingOff'
+                    }
+                },
+                {
                     id: 'obj_pump-01',
                     entity: 'binary_sensor.froeling_hk01_pumpe_an_aus',
                     label: 'Heizkreispumpe AN AUS',
@@ -470,7 +483,7 @@ class FroelingPufferCard extends BaseFroelingCard {
             entities: [
                 {
                     id: 'txt_pump-01-rpm',
-                    entity: 'sensor.froeling_puffer_1_pufferpumpen_ansteuerung',
+                    entity: 'sensor.froeling_buffer_1_charge_state',
                     label: 'Pufferpumpen Ansteuerung',
                     displayId: 'pump-01-rpm',
                     display: 'on'
@@ -484,28 +497,35 @@ class FroelingPufferCard extends BaseFroelingCard {
                 },
                 {
                     id: 'txt_buffer-lower-sensor',
-                    entity: 'sensor.froeling_puffer_1_temperatur_unten',
+                    entity: 'sensor.froeling_buffer_1_bottom_temperature',
                     label: 'Tempertaur unten im Pufferspeicher',
                     displayId: 'buffer-lower-sensor',
                     display: 'on'
                 },
                 {
+                    id: 'txt_buffer-lower-middle-sensor',
+                    entity: 'sensor.froeling_buffer_1_temperature_sensor_3',
+                    label: 'Tempertaur mitte im Pufferspeicher',
+                    displayId: 'buffer-lower-middle-sensor',
+                    display: 'on'
+                },
+                {
                     id: 'txt_buffer-middle-sensor',
-                    entity: 'sensor.froeling_puffer_1_temperatur_mitte',
+                    entity: 'sensor.froeling_buffer_1_temperature_sensor_2',
                     label: 'Tempertaur mitte im Pufferspeicher',
                     displayId: 'buffer-middle-sensor',
                     display: 'on'
                 },
                 {
                     id: 'txt_buffer-upper-sensor',
-                    entity: 'sensor.froeling_puffer_1_temperatur_oben',
+                    entity: 'sensor.froeling_buffer_1_top_temperature',
                     label: 'Tempertaur oben im Pufferspeicher',
                     displayId: 'buffer-upper-sensor',
                     display: 'on'
                 },
                 {
                     id: 'obj_pump',
-                    entity: 'binary_sensor.froeling_puffer_1_pumpe_an_aus',
+                    entity: 'binary_sensor.froeling_buffer_1_pump_on_off',
                     label: 'Pufferpumpe AN AUS',
                     stateClasses: {
                         'on': 'stPumpActive',
